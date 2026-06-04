@@ -1,673 +1,134 @@
 (function () {
   window.THBA = window.THBA || {};
-  window.THBA.ASSET_CATALOG = {
-  "version": 1,
-  "generatedFrom": "PNG header and alpha-occupancy scan",
-  "defaults": {
-    "characterCellSize": 128,
-    "enemyCellSize": 128,
-    "uiCellSize": 128,
-    "portraitCellSize": 256,
-    "tilesetCellSize": 64
+  window.THBA.ASSET_AUDIT_MANIFEST = {
+  "version": 2,
+  "mode": "asset-audit",
+  "summary": {
+    "assetRoot": "assets/",
+    "pngCount": 10,
+    "displayRule": "Display each source PNG exactly once as a whole image. Do not slice, animate, tile, crop, or use as gameplay art in this phase."
   },
-  "files": [
+  "assets": [
     {
-      "id": "characters.sheet",
       "path": "assets/characters/ChatGPT Image Jun 4, 2026, 08_11_39 PM.png",
-      "category": "player_npcs",
-      "purpose": "Player character and townsfolk sprite sheet",
+      "filename": "ChatGPT Image Jun 4, 2026, 08_11_39 PM.png",
+      "folder": "assets/characters",
       "width": 1024,
       "height": 1536,
+      "colorMode": "RGBA",
       "hasAlpha": true,
-      "sourceCellSize": 128,
-      "grid": {
-        "columns": 8,
-        "rows": 12
-      },
-      "frameCount": 96,
-      "usableFrameCount": 71,
-      "animationRows": [
-        {
-          "name": "player_down",
-          "row": 1,
-          "frames": [
-            0,
-            1,
-            2,
-            3
-          ]
-        },
-        {
-          "name": "player_right",
-          "row": 2,
-          "frames": [
-            0,
-            1,
-            2,
-            3
-          ]
-        },
-        {
-          "name": "player_up",
-          "row": 3,
-          "frames": [
-            0,
-            1,
-            2,
-            3
-          ]
-        },
-        {
-          "name": "player_left",
-          "row": 4,
-          "frames": [
-            0,
-            1,
-            2,
-            3
-          ]
-        },
-        {
-          "name": "townsfolk",
-          "row": 5,
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ]
-        }
-      ],
-      "aliases": {
-        "player.down.0": {
-          "x": 0,
-          "y": 128,
-          "w": 128,
-          "h": 128
-        },
-        "player.down.1": {
-          "x": 128,
-          "y": 128,
-          "w": 128,
-          "h": 128
-        },
-        "player.down.2": {
-          "x": 256,
-          "y": 128,
-          "w": 128,
-          "h": 128
-        },
-        "player.down.3": {
-          "x": 384,
-          "y": 128,
-          "w": 128,
-          "h": 128
-        },
-        "player.right.0": {
-          "x": 0,
-          "y": 256,
-          "w": 128,
-          "h": 128
-        },
-        "player.right.1": {
-          "x": 128,
-          "y": 256,
-          "w": 128,
-          "h": 128
-        },
-        "player.right.2": {
-          "x": 256,
-          "y": 256,
-          "w": 128,
-          "h": 128
-        },
-        "player.right.3": {
-          "x": 384,
-          "y": 256,
-          "w": 128,
-          "h": 128
-        },
-        "player.up.0": {
-          "x": 0,
-          "y": 384,
-          "w": 128,
-          "h": 128
-        },
-        "player.up.1": {
-          "x": 128,
-          "y": 384,
-          "w": 128,
-          "h": 128
-        },
-        "player.up.2": {
-          "x": 256,
-          "y": 384,
-          "w": 128,
-          "h": 128
-        },
-        "player.up.3": {
-          "x": 384,
-          "y": 384,
-          "w": 128,
-          "h": 128
-        },
-        "npc.elowen": {
-          "x": 0,
-          "y": 640,
-          "w": 128,
-          "h": 128
-        },
-        "npc.jonah": {
-          "x": 128,
-          "y": 640,
-          "w": 128,
-          "h": 128
-        },
-        "npc.marr": {
-          "x": 256,
-          "y": 640,
-          "w": 128,
-          "h": 128
-        },
-        "npc.child": {
-          "x": 384,
-          "y": 640,
-          "w": 128,
-          "h": 128
-        },
-        "npc.orlen": {
-          "x": 512,
-          "y": 640,
-          "w": 128,
-          "h": 128
-        },
-        "npc.townsfolk": {
-          "x": 640,
-          "y": 640,
-          "w": 128,
-          "h": 128
-        }
-      }
+      "classification": "true sprite sheet",
+      "likelyPurpose": "Player character and townsfolk sprites",
+      "notes": "Transparent character sheet; audit scene displays the entire image once with no slicing or animation."
     },
     {
-      "id": "enemies.hollowed",
       "path": "assets/enemies/ChatGPT Image Jun 4, 2026, 08_11_42 PM.png",
-      "category": "enemy_sprites",
-      "purpose": "Hollowed townspeople base enemy sheet",
+      "filename": "ChatGPT Image Jun 4, 2026, 08_11_42 PM.png",
+      "folder": "assets/enemies",
       "width": 1024,
       "height": 1536,
+      "colorMode": "RGBA",
       "hasAlpha": true,
-      "sourceCellSize": 128,
-      "grid": {
-        "columns": 8,
-        "rows": 12
-      },
-      "frameCount": 96,
-      "usableFrameCount": 95,
-      "animationRows": [
-        {
-          "name": "walk",
-          "row": 1,
-          "frames": [
-            0,
-            1,
-            2,
-            3
-          ]
-        }
-      ],
-      "aliases": {
-        "enemy.hollowed.0": {
-          "x": 0,
-          "y": 128,
-          "w": 128,
-          "h": 128
-        },
-        "enemy.hollowed.1": {
-          "x": 128,
-          "y": 128,
-          "w": 128,
-          "h": 128
-        },
-        "enemy.hollowed.2": {
-          "x": 256,
-          "y": 128,
-          "w": 128,
-          "h": 128
-        },
-        "enemy.hollowed.3": {
-          "x": 384,
-          "y": 128,
-          "w": 128,
-          "h": 128
-        }
-      }
+      "classification": "true sprite sheet",
+      "likelyPurpose": "Hollowed townspeople enemy sprites",
+      "notes": "Transparent enemy sheet; audit scene displays the entire image once with no slicing or animation."
     },
     {
-      "id": "enemies.keeper",
       "path": "assets/enemies/ChatGPT Image Jun 4, 2026, 08_24_53 PM.png",
-      "category": "enemy_sprites",
-      "purpose": "Attendance Keeper and Bell-Ringer base sheet",
+      "filename": "ChatGPT Image Jun 4, 2026, 08_24_53 PM.png",
+      "folder": "assets/enemies",
       "width": 1024,
       "height": 1536,
+      "colorMode": "RGBA",
       "hasAlpha": true,
-      "sourceCellSize": 128,
-      "grid": {
-        "columns": 8,
-        "rows": 12
-      },
-      "frameCount": 96,
-      "usableFrameCount": 96,
-      "animationRows": [
-        {
-          "name": "walk_boss",
-          "row": 1,
-          "frames": [
-            0,
-            1,
-            2,
-            3
-          ]
-        }
-      ],
-      "aliases": {
-        "enemy.keeper.0": {
-          "x": 0,
-          "y": 128,
-          "w": 128,
-          "h": 128
-        },
-        "enemy.keeper.1": {
-          "x": 128,
-          "y": 128,
-          "w": 128,
-          "h": 128
-        },
-        "enemy.keeper.2": {
-          "x": 256,
-          "y": 128,
-          "w": 128,
-          "h": 128
-        },
-        "enemy.keeper.3": {
-          "x": 384,
-          "y": 128,
-          "w": 128,
-          "h": 128
-        }
-      }
+      "classification": "true sprite sheet",
+      "likelyPurpose": "Attendance Keeper and Bell-Ringer enemy sprites",
+      "notes": "Transparent enemy sheet; audit scene displays the entire image once with no slicing or animation."
     },
     {
-      "id": "enemies.surgeon",
       "path": "assets/enemies/ChatGPT Image Jun 4, 2026, 08_24_59 PM.png",
-      "category": "enemy_sprites",
-      "purpose": "Surgeon Without Hands base sheet",
+      "filename": "ChatGPT Image Jun 4, 2026, 08_24_59 PM.png",
+      "folder": "assets/enemies",
       "width": 1024,
       "height": 1536,
+      "colorMode": "RGBA",
       "hasAlpha": true,
-      "sourceCellSize": 128,
-      "grid": {
-        "columns": 8,
-        "rows": 12
-      },
-      "frameCount": 96,
-      "usableFrameCount": 95,
-      "animationRows": [
-        {
-          "name": "walk_boss",
-          "row": 1,
-          "frames": [
-            0,
-            1,
-            2,
-            3
-          ]
-        }
-      ],
-      "aliases": {
-        "enemy.surgeon.0": {
-          "x": 0,
-          "y": 128,
-          "w": 128,
-          "h": 128
-        },
-        "enemy.surgeon.1": {
-          "x": 128,
-          "y": 128,
-          "w": 128,
-          "h": 128
-        },
-        "enemy.surgeon.2": {
-          "x": 256,
-          "y": 128,
-          "w": 128,
-          "h": 128
-        },
-        "enemy.surgeon.3": {
-          "x": 384,
-          "y": 128,
-          "w": 128,
-          "h": 128
-        }
-      }
+      "classification": "true sprite sheet",
+      "likelyPurpose": "Surgeon Without Hands enemy sprites",
+      "notes": "Transparent enemy sheet; audit scene displays the entire image once with no slicing or animation."
     },
     {
-      "id": "enemies.depths",
       "path": "assets/enemies/ChatGPT Image Jun 4, 2026, 08_25_03 PM.png",
-      "category": "enemy_sprites",
-      "purpose": "Mine horrors, forest stalkers, and final Hollow variants",
+      "filename": "ChatGPT Image Jun 4, 2026, 08_25_03 PM.png",
+      "folder": "assets/enemies",
       "width": 1024,
       "height": 1536,
+      "colorMode": "RGBA",
       "hasAlpha": true,
-      "sourceCellSize": 128,
-      "grid": {
-        "columns": 8,
-        "rows": 12
-      },
-      "frameCount": 96,
-      "usableFrameCount": 96,
-      "animationRows": [
-        {
-          "name": "walk_horror",
-          "row": 1,
-          "frames": [
-            0,
-            1,
-            2,
-            3
-          ]
-        }
-      ],
-      "aliases": {
-        "enemy.depths.0": {
-          "x": 0,
-          "y": 128,
-          "w": 128,
-          "h": 128
-        },
-        "enemy.depths.1": {
-          "x": 128,
-          "y": 128,
-          "w": 128,
-          "h": 128
-        },
-        "enemy.depths.2": {
-          "x": 256,
-          "y": 128,
-          "w": 128,
-          "h": 128
-        },
-        "enemy.depths.3": {
-          "x": 384,
-          "y": 128,
-          "w": 128,
-          "h": 128
-        }
-      }
+      "classification": "true sprite sheet",
+      "likelyPurpose": "Mine horror, forest stalker, and final Hollow enemy sprites",
+      "notes": "Transparent enemy sheet; audit scene displays the entire image once with no slicing or animation."
     },
     {
-      "id": "portraits.sheet",
       "path": "assets/portraits/ChatGPT Image Jun 4, 2026, 08_15_41 PM.png",
-      "category": "portraits",
-      "purpose": "Major character portrait sheet",
+      "filename": "ChatGPT Image Jun 4, 2026, 08_15_41 PM.png",
+      "folder": "assets/portraits",
       "width": 1024,
       "height": 1024,
+      "colorMode": "RGBA",
       "hasAlpha": true,
-      "sourceCellSize": 256,
-      "grid": {
-        "columns": 4,
-        "rows": 4
-      },
-      "frameCount": 16,
-      "usableFrameCount": 15,
-      "animationRows": [],
-      "aliases": {
-        "portrait.hollow": {
-          "x": 0,
-          "y": 0,
-          "w": 256,
-          "h": 256
-        },
-        "portrait.jonah": {
-          "x": 256,
-          "y": 0,
-          "w": 256,
-          "h": 256
-        },
-        "portrait.elowen": {
-          "x": 512,
-          "y": 0,
-          "w": 256,
-          "h": 256
-        },
-        "portrait.marr": {
-          "x": 768,
-          "y": 0,
-          "w": 256,
-          "h": 256
-        },
-        "portrait.child": {
-          "x": 0,
-          "y": 256,
-          "w": 256,
-          "h": 256
-        },
-        "portrait.orlen": {
-          "x": 256,
-          "y": 256,
-          "w": 256,
-          "h": 256
-        }
-      }
+      "classification": "portrait",
+      "likelyPurpose": "Major character portraits",
+      "notes": "Transparent portrait sheet/artwork; audit scene displays the entire image once with no slicing."
     },
     {
-      "id": "ui.sheet",
-      "path": "assets/ui/ChatGPT Image Jun 4, 2026, 08_13_04 PM.png",
-      "category": "ui_assets",
-      "purpose": "Pixel UI panels, ornaments, icons, buttons",
-      "width": 1024,
-      "height": 1536,
-      "hasAlpha": true,
-      "sourceCellSize": 128,
-      "grid": {
-        "columns": 8,
-        "rows": 12
-      },
-      "frameCount": 96,
-      "usableFrameCount": 96,
-      "animationRows": [],
-      "aliases": {
-        "ui.corner": {
-          "x": 0,
-          "y": 128,
-          "w": 128,
-          "h": 128
-        },
-        "ui.icon.bell": {
-          "x": 128,
-          "y": 128,
-          "w": 128,
-          "h": 128
-        },
-        "ui.icon.key": {
-          "x": 256,
-          "y": 128,
-          "w": 128,
-          "h": 128
-        }
-      }
-    },
-    {
-      "id": "tilesets.town",
       "path": "assets/tilesets/ChatGPT Image Jun 4, 2026, 08_11_46 PM.png",
-      "category": "tilesets",
-      "purpose": "Town, road, urban interiors, hospital and school base tiles",
+      "filename": "ChatGPT Image Jun 4, 2026, 08_11_46 PM.png",
+      "folder": "assets/tilesets",
       "width": 1024,
       "height": 1536,
+      "colorMode": "RGB",
       "hasAlpha": false,
-      "sourceCellSize": 64,
-      "grid": {
-        "columns": 16,
-        "rows": 24
-      },
-      "frameCount": 384,
-      "usableFrameCount": 384,
-      "animationRows": [],
-      "aliases": {
-        "tile.town.floor": {
-          "x": 64,
-          "y": 64,
-          "w": 64,
-          "h": 64
-        },
-        "tile.town.road": {
-          "x": 192,
-          "y": 64,
-          "w": 64,
-          "h": 64
-        },
-        "tile.town.wall": {
-          "x": 320,
-          "y": 64,
-          "w": 64,
-          "h": 64
-        },
-        "tile.town.water": {
-          "x": 448,
-          "y": 128,
-          "w": 64,
-          "h": 64
-        },
-        "tile.town.debris": {
-          "x": 576,
-          "y": 192,
-          "w": 64,
-          "h": 64
-        }
-      }
+      "classification": "true tileset",
+      "likelyPurpose": "Town, urban, school, hospital, and street tiles",
+      "notes": "Opaque tileset; audit scene displays the entire image once with no tile sampling."
     },
     {
-      "id": "tilesets.wilds",
       "path": "assets/tilesets/ChatGPT Image Jun 4, 2026, 08_11_51 PM.png",
-      "category": "tilesets",
-      "purpose": "Forest edge, road, outskirts, mine entrance surface tiles",
+      "filename": "ChatGPT Image Jun 4, 2026, 08_11_51 PM.png",
+      "folder": "assets/tilesets",
       "width": 1024,
       "height": 1536,
+      "colorMode": "RGB",
       "hasAlpha": false,
-      "sourceCellSize": 64,
-      "grid": {
-        "columns": 16,
-        "rows": 24
-      },
-      "frameCount": 384,
-      "usableFrameCount": 384,
-      "animationRows": [],
-      "aliases": {
-        "tile.wilds.floor": {
-          "x": 64,
-          "y": 64,
-          "w": 64,
-          "h": 64
-        },
-        "tile.wilds.path": {
-          "x": 192,
-          "y": 64,
-          "w": 64,
-          "h": 64
-        },
-        "tile.wilds.tree": {
-          "x": 320,
-          "y": 128,
-          "w": 64,
-          "h": 64
-        },
-        "tile.wilds.rock": {
-          "x": 448,
-          "y": 192,
-          "w": 64,
-          "h": 64
-        },
-        "tile.wilds.debris": {
-          "x": 576,
-          "y": 256,
-          "w": 64,
-          "h": 64
-        }
-      }
+      "classification": "true tileset",
+      "likelyPurpose": "Forest, outskirts, road, and mine entrance surface tiles",
+      "notes": "Opaque tileset; audit scene displays the entire image once with no tile sampling."
     },
     {
-      "id": "tilesets.hollow",
       "path": "assets/tilesets/ChatGPT Image Jun 4, 2026, 08_11_55 PM.png",
-      "category": "tilesets",
-      "purpose": "Chapel, castle stone, cave, sewer, and underground Hollow tiles",
+      "filename": "ChatGPT Image Jun 4, 2026, 08_11_55 PM.png",
+      "folder": "assets/tilesets",
       "width": 1024,
       "height": 1536,
+      "colorMode": "RGB",
       "hasAlpha": false,
-      "sourceCellSize": 64,
-      "grid": {
-        "columns": 16,
-        "rows": 24
-      },
-      "frameCount": 384,
-      "usableFrameCount": 384,
-      "animationRows": [],
-      "aliases": {
-        "tile.hollow.floor": {
-          "x": 64,
-          "y": 64,
-          "w": 64,
-          "h": 64
-        },
-        "tile.hollow.stone": {
-          "x": 192,
-          "y": 64,
-          "w": 64,
-          "h": 64
-        },
-        "tile.hollow.cave": {
-          "x": 320,
-          "y": 128,
-          "w": 64,
-          "h": 64
-        },
-        "tile.hollow.sewer": {
-          "x": 448,
-          "y": 192,
-          "w": 64,
-          "h": 64
-        },
-        "tile.hollow.ritual": {
-          "x": 576,
-          "y": 256,
-          "w": 64,
-          "h": 64
-        }
-      }
+      "classification": "true tileset",
+      "likelyPurpose": "Chapel, stone, cave, sewer, ritual, and underground tiles",
+      "notes": "Opaque tileset; audit scene displays the entire image once with no tile sampling."
+    },
+    {
+      "path": "assets/ui/ChatGPT Image Jun 4, 2026, 08_13_04 PM.png",
+      "filename": "ChatGPT Image Jun 4, 2026, 08_13_04 PM.png",
+      "folder": "assets/ui",
+      "width": 1024,
+      "height": 1536,
+      "colorMode": "RGBA",
+      "hasAlpha": true,
+      "classification": "UI image",
+      "likelyPurpose": "Generated UI frames, icons, panels, and ornaments",
+      "notes": "Transparent UI sheet/artwork; audit scene displays the entire image once and does not use it as a repeating background."
     }
   ]
 };
-  window.THBA.ASSET_MANIFEST = {
-    tilesets: {
-      town: "assets/tilesets/ChatGPT Image Jun 4, 2026, 08_11_46 PM.png",
-      wilds: "assets/tilesets/ChatGPT Image Jun 4, 2026, 08_11_51 PM.png",
-      hollow: "assets/tilesets/ChatGPT Image Jun 4, 2026, 08_11_55 PM.png"
-    },
-    characters: {
-      sheet: "assets/characters/ChatGPT Image Jun 4, 2026, 08_11_39 PM.png"
-    },
-    enemies: {
-      hollowed: "assets/enemies/ChatGPT Image Jun 4, 2026, 08_11_42 PM.png",
-      keeper: "assets/enemies/ChatGPT Image Jun 4, 2026, 08_24_53 PM.png",
-      surgeon: "assets/enemies/ChatGPT Image Jun 4, 2026, 08_24_59 PM.png",
-      depths: "assets/enemies/ChatGPT Image Jun 4, 2026, 08_25_03 PM.png"
-    },
-    portraits: {
-      sheet: "assets/portraits/ChatGPT Image Jun 4, 2026, 08_15_41 PM.png"
-    },
-    ui: {
-      sheet: "assets/ui/ChatGPT Image Jun 4, 2026, 08_13_04 PM.png"
-    }
-  };
 })();
