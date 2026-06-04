@@ -374,7 +374,7 @@
       const portrait = this.portraitStyle(this.dialogue.npc.portrait || 0);
       this.showPanel(`
         <div class="dialogue-layout">
-          <div class="portrait" style="${portrait}"></div>
+          <div class="portrait"><canvas width="80" height="80" data-portrait="${portrait}"></canvas></div>
           <div>
             <h2>${d.speaker}</h2>
             <p>${reply || d.text}</p>
@@ -385,9 +385,21 @@
     }
 
     portraitStyle(index) {
-      const col = index % 4;
-      const row = Math.floor(index / 4);
-      return `background-position: -${col * 80}px -${row * 80}px;`;
+      const aliases = ["portrait.hollow", "portrait.jonah", "portrait.elowen", "portrait.marr", "portrait.child", "portrait.orlen"];
+      return aliases[index] || aliases[0];
+    }
+
+    drawPanelPortraits() {
+      const canvases = this.panel.querySelectorAll("canvas[data-portrait]");
+      canvases.forEach((canvas) => {
+        const ctx = canvas.getContext("2d");
+        ctx.imageSmoothingEnabled = false;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        this.assets.drawAlias(ctx, canvas.dataset.portrait, 0, 0, canvas.width, canvas.height, {
+          tint: "#16120f",
+          tintAlpha: .14
+        });
+      });
     }
 
     chooseDialogue(index) {
@@ -406,7 +418,7 @@
       const canKeeper = this.state.sanity <= 35 || this.state.inventory.includes("bell_relic");
       this.showPanel(`
         <div class="dialogue-layout">
-          <div class="portrait" style="${this.portraitStyle(0)}"></div>
+          <div class="portrait"><canvas width="80" height="80" data-portrait="portrait.hollow"></canvas></div>
           <div>
             <h2>The Hollow</h2>
             <p>${window.THBA.DIALOGUES.final_choice.text}</p>
@@ -594,6 +606,7 @@
       this.panel.classList.toggle("full", !!full);
       this.panel.classList.remove("hidden");
       this.panel.onclick = (event) => this.handlePanelClick(event);
+      this.drawPanelPortraits();
     }
 
     hidePanel() {
@@ -629,20 +642,18 @@
 
     drawWorld(ctx, time) {
       const map = this.currentMap();
-      const sheet = map.skin === "town" ? "tilesets.town" : map.skin === "wilds" ? "tilesets.wilds" : "tilesets.hollow";
       const startX = Math.floor(this.camera.x / TILE);
       const startY = Math.floor(this.camera.y / TILE);
       const endX = startX + Math.ceil(VIEW_W / TILE) + 2;
       const endY = startY + Math.ceil(VIEW_H / TILE) + 2;
       for (let y = startY; y < endY; y += 1) {
         for (let x = startX; x < endX; x += 1) {
-          const sx = ((x + y * 3) % 8) * 96;
-          const sy = ((x * 5 + y) % 10) * 96;
           const dx = Math.floor(x * TILE - this.camera.x);
           const dy = Math.floor(y * TILE - this.camera.y);
-          this.assets.drawCrop(ctx, sheet, sx, sy, 96, 96, dx, dy, TILE, TILE, {
-            tint: map.skin === "hollow" ? "#31223a" : map.skin === "wilds" ? "#263c31" : "#2e3032",
-            tintAlpha: .28
+          const alias = this.tileAlias(map, x, y);
+          this.assets.drawAlias(ctx, alias, dx, dy, TILE, TILE, {
+            tint: map.skin === "hollow" ? "#23182a" : map.skin === "wilds" ? "#17271f" : "#202326",
+            tintAlpha: .22
           });
         }
       }
@@ -657,6 +668,27 @@
       for (const pickup of map.pickups) {
         if (!this.state.picked[pickup.id] && hasFlag(this.state, pickup.flag)) this.drawMarker(ctx, pickup.x, pickup.y, "#d5b27f", pickup.label);
       }
+    }
+
+    tileAlias(map, x, y) {
+      if (map.skin === "town") {
+        if (map.id === "school" && (x + y) % 7 === 0) return "tile.town.water";
+        if ((x * 3 + y) % 11 === 0) return "tile.town.debris";
+        if ((x + y) % 5 === 0) return "tile.town.road";
+        return "tile.town.floor";
+      }
+      if (map.skin === "wilds") {
+        if ((x + y * 2) % 9 === 0) return "tile.wilds.tree";
+        if ((x * 5 + y) % 13 === 0) return "tile.wilds.rock";
+        if ((x + y) % 4 === 0) return "tile.wilds.path";
+        return "tile.wilds.floor";
+      }
+      if (map.id === "descent" || map.id === "underground" || map.id === "final_chamber") {
+        if ((x + y) % 8 === 0) return "tile.hollow.cave";
+        if ((x * 2 + y) % 13 === 0) return "tile.hollow.ritual";
+      }
+      if ((x + y) % 6 === 0) return "tile.hollow.stone";
+      return "tile.hollow.floor";
     }
 
     drawMarker(ctx, tx, ty, color, label) {
@@ -675,7 +707,7 @@
     drawActors(ctx, time) {
       const map = this.currentMap();
       for (const npc of map.npcs) {
-        if (hasFlag(this.state, npc.flag)) this.drawCharacter(ctx, npc.x * TILE, npc.y * TILE, npc.portrait || 0, "#6d6c5f");
+        if (hasFlag(this.state, npc.flag)) this.drawCharacter(ctx, npc.x * TILE, npc.y * TILE, npc.id || "townsfolk", "#6d6c5f");
       }
       for (const enemy of this.liveEnemies()) this.drawEnemy(ctx, enemy, time);
       this.drawPlayer(ctx, time);
@@ -683,10 +715,9 @@
 
     drawPlayer(ctx, time) {
       const p = this.state.player;
-      const frame = Math.floor(time / 160) % 3;
-      const sx = frame * 128;
-      const sy = p.dir === "up" ? 384 : p.dir === "left" ? 256 : p.dir === "right" ? 128 : 0;
-      this.assets.drawCrop(ctx, "characters.sheet", sx, sy, 128, 128, Math.floor(p.x - this.camera.x - 18), Math.floor(p.y - this.camera.y - 28), 36, 36, {
+      const frame = Math.floor(time / 160) % 4;
+      const direction = p.dir === "left" ? "right" : p.dir;
+      this.assets.drawAlias(ctx, `player.${direction}.${frame}`, Math.floor(p.x - this.camera.x - 18), Math.floor(p.y - this.camera.y - 28), 36, 36, {
         tint: p.invuln > 0 ? "#e6d6bf" : "#111111",
         tintAlpha: p.invuln > 0 ? .22 : .08,
         mirror: p.dir === "left"
@@ -700,10 +731,17 @@
       }
     }
 
-    drawCharacter(ctx, x, y, index, tint) {
-      const sx = (index % 4) * 128;
-      const sy = Math.floor(index / 4) * 128;
-      this.assets.drawCrop(ctx, "characters.sheet", sx, sy, 128, 128, Math.floor(x - this.camera.x - 16), Math.floor(y - this.camera.y - 28), 34, 36, {
+    drawCharacter(ctx, x, y, id, tint) {
+      const aliases = {
+        jonah: "npc.jonah",
+        elowen: "npc.elowen",
+        marr: "npc.marr",
+        child_chapel: "npc.child",
+        child_hollow: "npc.child",
+        orlen: "npc.orlen",
+        townsfolk: "npc.townsfolk"
+      };
+      this.assets.drawAlias(ctx, aliases[id] || aliases.townsfolk, Math.floor(x - this.camera.x - 16), Math.floor(y - this.camera.y - 28), 34, 36, {
         tint,
         tintAlpha: .22
       });
@@ -712,10 +750,8 @@
     drawEnemy(ctx, enemy, time) {
       const def = window.THBA.ENEMIES[enemy.type];
       const frame = Math.floor(time / 180) % 4;
-      const sx = frame * 128;
-      const sy = enemy.boss ? 128 : 0;
       const size = enemy.boss ? 48 : 36;
-      this.assets.drawCrop(ctx, `enemies.${def.sheet}`, sx, sy, 128, 128, Math.floor(enemy.x - this.camera.x - size / 2), Math.floor(enemy.y - this.camera.y - size + 8), size, size, {
+      this.assets.drawAlias(ctx, `enemy.${def.sheet}.${frame}`, Math.floor(enemy.x - this.camera.x - size / 2), Math.floor(enemy.y - this.camera.y - size + 8), size, size, {
         tint: def.tint,
         tintAlpha: .38,
         mirror: Math.floor(time / 500) % 2 === 0

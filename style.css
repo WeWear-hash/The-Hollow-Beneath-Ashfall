@@ -64,8 +64,7 @@ body {
   padding: 14px 16px;
   border: 2px solid #443b32;
   background:
-    linear-gradient(180deg, rgba(25, 24, 22, .95), rgba(10, 10, 10, .98)),
-    url("assets/ui/ChatGPT Image Jun 4, 2026, 08_13_04 PM.png") center / 360px auto;
+    linear-gradient(180deg, rgba(25, 24, 22, .96), rgba(10, 10, 10, .98));
   box-shadow: 0 12px 40px rgba(0, 0, 0, .65), inset 0 0 0 1px rgba(215, 208, 189, .08);
 }
 
@@ -90,10 +89,16 @@ body {
   width: 80px;
   height: 80px;
   border: 1px solid #6f5d4a;
-  background-image: url("assets/portraits/ChatGPT Image Jun 4, 2026, 08_15_41 PM.png");
-  background-size: 320px 320px;
+  background: #0b0b0c;
   image-rendering: pixelated;
   filter: grayscale(.18) contrast(.92) brightness(.78);
+}
+
+.portrait canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
 }
 
 h1,
