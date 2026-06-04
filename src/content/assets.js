@@ -19,7 +19,7 @@
       zombie: { src: "assets/enemies/zombie_sprites/zombie_0.png", frameW: 128, frameH: 128, def: "zombie" },
       skeleton: { src: "assets/enemies/monster_pack/Spritesheets Skeletons/Skeleton/Skeleton_Move.png", frameW: 64, frameH: 64, def: "skeleton" },
       witch: { src: "assets/enemies/monster_pack/Spritesheets Skeletons/Witch Doctor/Witch_Doctor_Move.png", frameW: 64, frameH: 64, def: "witch" },
-      hollowSaint: { src: "assets/enemies/monster_pack/Spritesheets/Artifact/F_Magic_Artifact_Necromicon.png", frameW: 64, frameH: 64, def: "boss" },
+      hollowSaint: { src: "assets/enemies/monster_pack/Spritesheets/Staff/F_Magic_Staff_Retro.png", frameW: 64, frameH: 64, def: "boss" },
       swordThing: { src: "assets/enemies/monster_pack/Spritesheets/Sword/F_Melee_1H_Sword_Retro.png", frameW: 64, frameH: 64, def: "boss" }
     }
   };
