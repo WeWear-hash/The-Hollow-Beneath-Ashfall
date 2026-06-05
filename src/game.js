@@ -374,7 +374,7 @@
       const portrait = this.portraitStyle(this.dialogue.npc.portrait || 0);
       this.showPanel(`
         <div class="dialogue-layout">
-          <div class="portrait"><canvas width="80" height="80" data-portrait="${portrait}"></canvas></div>
+          <div class="portrait"><canvas width="80" height="80" data-portrait-name="${portrait}"></canvas></div>
           <div>
             <h2>${d.speaker}</h2>
             <p>${reply || d.text}</p>
@@ -385,20 +385,29 @@
     }
 
     portraitStyle(index) {
-      const aliases = ["portrait.hollow", "portrait.jonah", "portrait.elowen", "portrait.marr", "portrait.child", "portrait.orlen"];
-      return aliases[index] || aliases[0];
+      const names = ["Hollow", "Jonah", "Elowen", "Marr", "Child", "Orlen"];
+      return names[index] || names[0];
     }
 
     drawPanelPortraits() {
-      const canvases = this.panel.querySelectorAll("canvas[data-portrait]");
+      const canvases = this.panel.querySelectorAll("canvas[data-portrait-name]");
       canvases.forEach((canvas) => {
         const ctx = canvas.getContext("2d");
+        const name = canvas.dataset.portraitName || "Ashfall";
         ctx.imageSmoothingEnabled = false;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        this.assets.drawAlias(ctx, canvas.dataset.portrait, 0, 0, canvas.width, canvas.height, {
-          tint: "#16120f",
-          tintAlpha: .14
-        });
+        ctx.fillStyle = "#0b0b0c";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#1f1d1a";
+        ctx.fillRect(8, 8, 64, 64);
+        ctx.fillStyle = "#3c3329";
+        ctx.fillRect(20, 14, 40, 20);
+        ctx.fillStyle = "#15120f";
+        ctx.fillRect(18, 34, 44, 30);
+        ctx.fillStyle = "#d7d0bd";
+        ctx.font = "10px serif";
+        ctx.textAlign = "center";
+        ctx.fillText(name.slice(0, 8), 40, 74);
       });
     }
 
@@ -418,7 +427,7 @@
       const canKeeper = this.state.sanity <= 35 || this.state.inventory.includes("bell_relic");
       this.showPanel(`
         <div class="dialogue-layout">
-          <div class="portrait"><canvas width="80" height="80" data-portrait="portrait.hollow"></canvas></div>
+          <div class="portrait"><canvas width="80" height="80" data-portrait-name="Hollow"></canvas></div>
           <div>
             <h2>The Hollow</h2>
             <p>${window.THBA.DIALOGUES.final_choice.text}</p>
@@ -650,11 +659,7 @@
         for (let x = startX; x < endX; x += 1) {
           const dx = Math.floor(x * TILE - this.camera.x);
           const dy = Math.floor(y * TILE - this.camera.y);
-          const alias = this.tileAlias(map, x, y);
-          this.assets.drawAlias(ctx, alias, dx, dy, TILE, TILE, {
-            tint: map.skin === "hollow" ? "#23182a" : map.skin === "wilds" ? "#17271f" : "#202326",
-            tintAlpha: .22
-          });
+          this.drawProceduralTile(ctx, map, x, y, dx, dy);
         }
       }
       ctx.fillStyle = "rgba(2, 2, 3, .45)";
@@ -670,25 +675,26 @@
       }
     }
 
-    tileAlias(map, x, y) {
-      if (map.skin === "town") {
-        if (map.id === "school" && (x + y) % 7 === 0) return "tile.town.water";
-        if ((x * 3 + y) % 11 === 0) return "tile.town.debris";
-        if ((x + y) % 5 === 0) return "tile.town.road";
-        return "tile.town.floor";
+    drawProceduralTile(ctx, map, x, y, dx, dy) {
+      const palettes = {
+        town: ["#17191a", "#202322", "#2a2c28", "#101111"],
+        wilds: ["#101812", "#1b2b1f", "#263624", "#0b110d"],
+        hollow: ["#111015", "#1c1822", "#2a2330", "#09080b"]
+      };
+      const palette = palettes[map.skin] || palettes.town;
+      const n = Math.abs((x * 73856093 ^ y * 19349663) % palette.length);
+      ctx.fillStyle = palette[n];
+      ctx.fillRect(dx, dy, TILE, TILE);
+      ctx.fillStyle = "rgba(255,255,255,.035)";
+      if ((x + y) % 3 === 0) ctx.fillRect(dx + 2, dy + 2, TILE - 4, 2);
+      ctx.fillStyle = "rgba(0,0,0,.18)";
+      ctx.fillRect(dx, dy + TILE - 3, TILE, 3);
+      if ((x * 5 + y * 7) % 17 === 0) {
+        ctx.fillStyle = map.skin === "wilds" ? "#31432e" : map.skin === "hollow" ? "#3b2741" : "#34332c";
+        ctx.fillRect(dx + 6, dy + 6, 10, 10);
+        ctx.fillStyle = "rgba(0,0,0,.25)";
+        ctx.fillRect(dx + 8, dy + 16, 11, 3);
       }
-      if (map.skin === "wilds") {
-        if ((x + y * 2) % 9 === 0) return "tile.wilds.tree";
-        if ((x * 5 + y) % 13 === 0) return "tile.wilds.rock";
-        if ((x + y) % 4 === 0) return "tile.wilds.path";
-        return "tile.wilds.floor";
-      }
-      if (map.id === "descent" || map.id === "underground" || map.id === "final_chamber") {
-        if ((x + y) % 8 === 0) return "tile.hollow.cave";
-        if ((x * 2 + y) % 13 === 0) return "tile.hollow.ritual";
-      }
-      if ((x + y) % 6 === 0) return "tile.hollow.stone";
-      return "tile.hollow.floor";
     }
 
     drawMarker(ctx, tx, ty, color, label) {
@@ -715,12 +721,14 @@
 
     drawPlayer(ctx, time) {
       const p = this.state.player;
-      const frame = Math.floor(time / 160) % 4;
-      const direction = p.dir === "left" ? "right" : p.dir;
-      this.assets.drawAlias(ctx, `player.${direction}.${frame}`, Math.floor(p.x - this.camera.x - 18), Math.floor(p.y - this.camera.y - 28), 36, 36, {
-        tint: p.invuln > 0 ? "#e6d6bf" : "#111111",
-        tintAlpha: p.invuln > 0 ? .22 : .08,
-        mirror: p.dir === "left"
+      const bob = Math.floor(Math.sin(time / 130) * 2);
+      this.drawPixelPerson(ctx, p.x - this.camera.x, p.y - this.camera.y + bob, {
+        coat: "#1f1b17",
+        trim: "#b9824b",
+        face: "#7b5a42",
+        scale: 1,
+        direction: p.dir,
+        glow: p.invuln > 0
       });
       if (p.attack > 0) {
         ctx.strokeStyle = "rgba(230, 210, 172, .75)";
@@ -732,29 +740,32 @@
     }
 
     drawCharacter(ctx, x, y, id, tint) {
-      const aliases = {
-        jonah: "npc.jonah",
-        elowen: "npc.elowen",
-        marr: "npc.marr",
-        child_chapel: "npc.child",
-        child_hollow: "npc.child",
-        orlen: "npc.orlen",
-        townsfolk: "npc.townsfolk"
+      const colors = {
+        jonah: "#54473a",
+        elowen: "#6e6b61",
+        marr: "#495966",
+        child_chapel: "#6a5b70",
+        child_hollow: "#6a5b70",
+        orlen: "#5b493a",
+        townsfolk: "#4b4a44"
       };
-      this.assets.drawAlias(ctx, aliases[id] || aliases.townsfolk, Math.floor(x - this.camera.x - 16), Math.floor(y - this.camera.y - 28), 34, 36, {
-        tint,
-        tintAlpha: .22
+      this.drawPixelPerson(ctx, x - this.camera.x, y - this.camera.y, {
+        coat: colors[id] || tint || "#4b4a44",
+        trim: "#8f8068",
+        face: "#6f5340",
+        scale: .92,
+        direction: "down"
       });
     }
 
     drawEnemy(ctx, enemy, time) {
       const def = window.THBA.ENEMIES[enemy.type];
-      const frame = Math.floor(time / 180) % 4;
-      const size = enemy.boss ? 48 : 36;
-      this.assets.drawAlias(ctx, `enemy.${def.sheet}.${frame}`, Math.floor(enemy.x - this.camera.x - size / 2), Math.floor(enemy.y - this.camera.y - size + 8), size, size, {
-        tint: def.tint,
-        tintAlpha: .38,
-        mirror: Math.floor(time / 500) % 2 === 0
+      const size = enemy.boss ? 1.35 : 1;
+      const pulse = 1 + Math.sin(time / 150) * .08;
+      this.drawPixelHorror(ctx, enemy.x - this.camera.x, enemy.y - this.camera.y, {
+        color: def.tint,
+        scale: size * pulse,
+        boss: enemy.boss
       });
       if (enemy.boss) {
         const hp = enemy.hp === undefined ? def.hp : enemy.hp;
@@ -766,6 +777,57 @@
         ctx.font = "10px system-ui";
         ctx.fillText(def.name, 102, 10);
       }
+    }
+
+    drawPixelPerson(ctx, x, y, options) {
+      const s = options.scale || 1;
+      const px = Math.floor(x);
+      const py = Math.floor(y);
+      ctx.save();
+      if (options.glow) {
+        ctx.fillStyle = "rgba(230,214,191,.22)";
+        ctx.fillRect(px - 13, py - 31, 26, 34);
+      }
+      ctx.fillStyle = "rgba(0,0,0,.35)";
+      ctx.fillRect(px - 8 * s, py + 2, 16 * s, 4);
+      ctx.fillStyle = options.coat;
+      ctx.fillRect(px - 7 * s, py - 20 * s, 14 * s, 22 * s);
+      ctx.fillStyle = options.face;
+      ctx.fillRect(px - 5 * s, py - 29 * s, 10 * s, 9 * s);
+      ctx.fillStyle = options.trim;
+      ctx.fillRect(px - 2 * s, py - 18 * s, 4 * s, 16 * s);
+      ctx.fillStyle = "#070707";
+      ctx.fillRect(px - 7 * s, py - 31 * s, 14 * s, 4 * s);
+      ctx.fillRect(px - 8 * s, py - 24 * s, 3 * s, 15 * s);
+      ctx.fillRect(px + 5 * s, py - 24 * s, 3 * s, 15 * s);
+      ctx.fillRect(px - 6 * s, py + 1, 4 * s, 7 * s);
+      ctx.fillRect(px + 2 * s, py + 1, 4 * s, 7 * s);
+      ctx.restore();
+    }
+
+    drawPixelHorror(ctx, x, y, options) {
+      const s = options.scale || 1;
+      const px = Math.floor(x);
+      const py = Math.floor(y);
+      ctx.save();
+      ctx.fillStyle = "rgba(0,0,0,.42)";
+      ctx.fillRect(px - 12 * s, py + 4, 24 * s, 5);
+      ctx.fillStyle = options.color || "#72515f";
+      ctx.fillRect(px - 9 * s, py - 24 * s, 18 * s, 25 * s);
+      ctx.fillStyle = "#171014";
+      ctx.fillRect(px - 6 * s, py - 31 * s, 12 * s, 10 * s);
+      ctx.fillStyle = "#d7d0bd";
+      ctx.fillRect(px - 3 * s, py - 27 * s, 2 * s, 2 * s);
+      ctx.fillRect(px + 2 * s, py - 27 * s, 2 * s, 2 * s);
+      ctx.fillStyle = "#080608";
+      ctx.fillRect(px - 14 * s, py - 15 * s, 6 * s, 5 * s);
+      ctx.fillRect(px + 8 * s, py - 15 * s, 6 * s, 5 * s);
+      if (options.boss) {
+        ctx.strokeStyle = "rgba(139,31,39,.75)";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(px - 16 * s, py - 35 * s, 32 * s, 40 * s);
+      }
+      ctx.restore();
     }
 
     drawEffects(ctx, time) {
