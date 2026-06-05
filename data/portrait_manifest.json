@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "mode": "single-image-dialogue-portraits",
+  "rules": {
+    "drawAsSingleImageOnly": true,
+    "noSlicing": true,
+    "fallback": "silhouette"
+  },
+  "portraits": [
+    {
+      "key": "elias_mercer",
+      "displayName": "Elias Mercer",
+      "intendedCharacter": "Player character",
+      "path": "assets/portraits/player_portrait.png",
+      "drawAsSingleImage": true,
+      "fallback": "silhouette",
+      "accentColor": "#b9824b"
+    },
+    {
+      "key": "sister_elowen",
+      "displayName": "Sister Elowen",
+      "intendedCharacter": "Sister Elowen",
+      "path": null,
+      "drawAsSingleImage": true,
+      "fallback": "silhouette",
+      "accentColor": "#9aa098"
+    },
+    {
+      "key": "jonah_reed",
+      "displayName": "Jonah Reed",
+      "intendedCharacter": "Jonah Reed",
+      "path": null,
+      "drawAsSingleImage": true,
+      "fallback": "silhouette",
+      "accentColor": "#7c6957"
+    },
+    {
+      "key": "dr_selene_marr",
+      "displayName": "Dr. Selene Marr",
+      "intendedCharacter": "Dr. Selene Marr",
+      "path": "assets/portraits/doctor_portrait.png",
+      "drawAsSingleImage": true,
+      "fallback": "silhouette",
+      "accentColor": "#6f88a1"
+    },
+    {
+      "key": "the_child",
+      "displayName": "The Child",
+      "intendedCharacter": "The Child",
+      "path": null,
+      "drawAsSingleImage": true,
+      "fallback": "silhouette",
+      "accentColor": "#8d79a3"
+    },
+    {
+      "key": "bell_ringer",
+      "displayName": "The Bell-Ringer",
+      "intendedCharacter": "The Bell-Ringer",
+      "path": null,
+      "drawAsSingleImage": true,
+      "fallback": "silhouette",
+      "accentColor": "#b9824b"
+    },
+    {
+      "key": "orlen_voss",
+      "displayName": "Orlen Voss",
+      "intendedCharacter": "Orlen Voss",
+      "path": "assets/portraits/father_portrait.png",
+      "drawAsSingleImage": true,
+      "fallback": "silhouette",
+      "accentColor": "#8a6d55"
+    },
+    {
+      "key": "attendance_keeper",
+      "displayName": "Attendance Keeper",
+      "intendedCharacter": "Attendance Keeper",
+      "path": null,
+      "drawAsSingleImage": true,
+      "fallback": "silhouette",
+      "accentColor": "#6f88a1"
+    },
+    {
+      "key": "surgeon_without_hands",
+      "displayName": "Surgeon Without Hands",
+      "intendedCharacter": "Surgeon Without Hands",
+      "path": null,
+      "drawAsSingleImage": true,
+      "fallback": "silhouette",
+      "accentColor": "#a17676"
+    },
+    {
+      "key": "the_hollow",
+      "displayName": "The Hollow",
+      "intendedCharacter": "The Hollow",
+      "path": null,
+      "drawAsSingleImage": true,
+      "fallback": "silhouette",
+      "accentColor": "#8b1f27"
+    }
+  ]
+}

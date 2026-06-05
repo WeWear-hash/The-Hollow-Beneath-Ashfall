@@ -45,7 +45,7 @@
       { x: 39, y: 14, to: "main_street", spawn: { x: 3, y: 14 }, label: "Main Street" }
     ], {
       props: [{ x: 11, y: 12, w: 4, h: 2 }, { x: 22, y: 18, w: 3, h: 2 }],
-      npcs: [{ id: "jonah", name: "Jonah Reed", x: 16, y: 13, dialogue: "jonah_intro", portrait: 1 }],
+      npcs: [{ id: "jonah", name: "Jonah Reed", x: 16, y: 13, dialogue: "jonah_intro", portrait: "jonah_reed" }],
       pickups: [{ id: "road_tincture", item: "tincture", x: 24, y: 15, label: "Cold Tincture" }]
     }),
     makeArea("main_street", "Main Street", "town", [
@@ -56,7 +56,7 @@
     ], {
       spawn: { x: 3, y: 14 },
       props: [{ x: 9, y: 8, w: 6, h: 4 }, { x: 25, y: 15, w: 8, h: 5 }],
-      npcs: [{ id: "elowen", name: "Sister Elowen", x: 18, y: 12, dialogue: "elowen_main", portrait: 2 }],
+      npcs: [{ id: "elowen", name: "Sister Elowen", x: 18, y: 12, dialogue: "elowen_main", portrait: "sister_elowen" }],
       enemies: [{ id: "hollowed_1", type: "hollowed", x: 31, y: 11 }]
     }),
     makeArea("chapel", "Chapel of Saint Ash", "hollow", [
@@ -65,7 +65,7 @@
     ], {
       props: [{ x: 13, y: 9, w: 15, h: 2 }, { x: 18, y: 18, w: 5, h: 2 }],
       pickups: [{ id: "chapel_key", item: "chapel_key", x: 20, y: 16, label: "Chapel Key" }],
-      npcs: [{ id: "child_chapel", name: "The Child", x: 29, y: 13, dialogue: "child_first", portrait: 4 }],
+      npcs: [{ id: "child_chapel", name: "The Child", x: 29, y: 13, dialogue: "child_first", portrait: "the_child" }],
       memory: { id: "memory_bells", x: 22, y: 10, text: "The bell remembers every name lowered into the mine." }
     }),
     makeArea("chapel_basement", "Sealed Chapel Basement", "hollow", [
@@ -89,7 +89,7 @@
       { x: 39, y: 14, to: "mine_entrance", spawn: { x: 3, y: 14 }, label: "Mine Road" }
     ], {
       props: [{ x: 10, y: 7, w: 5, h: 10 }, { x: 23, y: 8, w: 8, h: 8 }],
-      npcs: [{ id: "marr", name: "Dr. Selene Marr", x: 18, y: 14, dialogue: "marr_hospital", portrait: 3 }],
+      npcs: [{ id: "marr", name: "Dr. Selene Marr", x: 18, y: 14, dialogue: "marr_hospital", portrait: "dr_selene_marr" }],
       enemies: [{ id: "surgeon_boss", type: "surgeon", x: 32, y: 14, boss: true }],
       pickups: [{ id: "suture_kit", item: "suture_kit", x: 13, y: 19, label: "Suture Kit" }]
     }),
@@ -98,7 +98,7 @@
       { x: 39, y: 14, to: "forest", spawn: { x: 3, y: 20 }, label: "Hidden Path" }
     ], {
       props: [{ x: 8, y: 7, w: 9, h: 5 }, { x: 24, y: 16, w: 8, h: 5 }],
-      npcs: [{ id: "orlen", name: "Orlen Voss", x: 22, y: 10, dialogue: "orlen_home", portrait: 5 }],
+      npcs: [{ id: "orlen", name: "Orlen Voss", x: 22, y: 10, dialogue: "orlen_home", portrait: "orlen_voss" }],
       memory: { id: "memory_family", x: 14, y: 18, text: "A family photograph has your face scratched out." },
       pickups: [{ id: "family_locket", item: "family_locket", x: 26, y: 13, label: "Family Locket" }]
     }),
@@ -132,7 +132,7 @@
       { x: 39, y: 14, to: "final_chamber", spawn: { x: 3, y: 14 }, label: "Final Chamber" }
     ], {
       props: [{ x: 11, y: 4, w: 3, h: 20 }, { x: 28, y: 6, w: 4, h: 17 }],
-      npcs: [{ id: "child_hollow", name: "The Child", x: 20, y: 14, dialogue: "child_hollow", portrait: 4 }],
+      npcs: [{ id: "child_hollow", name: "The Child", x: 20, y: 14, dialogue: "child_hollow", portrait: "the_child" }],
       enemies: [{ id: "depth_horror_1", type: "mine", x: 31, y: 17 }]
     }),
     makeArea("final_chamber", "Heart of the Hollow", "hollow", [
@@ -140,7 +140,7 @@
     ], {
       props: [{ x: 18, y: 8, w: 6, h: 12 }],
       enemies: [{ id: "final_hollow", type: "final", x: 27, y: 14, boss: true }],
-      npcs: [{ id: "heart", name: "The Hollow", x: 30, y: 14, dialogue: "final_choice", portrait: 0, flag: "boss_final" }]
+      npcs: [{ id: "heart", name: "The Hollow", x: 30, y: 14, dialogue: "final_choice", portrait: "the_hollow", flag: "boss_final" }]
     })
   ];
 })();

@@ -34,6 +34,8 @@
       this.toastTimer = 0;
       this.dialogue = null;
       this.currentChoice = 0;
+      this.portraitImages = {};
+      this.failedPortraits = new Set();
       this.camera = { x: 0, y: 0 };
       this.effects = { rain: [], fog: [] };
       for (let i = 0; i < 80; i += 1) {
@@ -371,10 +373,10 @@
         return;
       }
       const choices = d.choices.map((choice, index) => `<button class="choice" data-choice="${index}">${index + 1}. ${choice.text}</button>`).join("");
-      const portrait = this.portraitStyle(this.dialogue.npc.portrait || 0);
+      const portrait = this.resolvePortraitKey(this.dialogue.npc, d);
       this.showPanel(`
         <div class="dialogue-layout">
-          <div class="portrait"><canvas width="80" height="80" data-portrait-name="${portrait}"></canvas></div>
+          <div class="portrait"><canvas width="80" height="80" data-portrait-key="${portrait}"></canvas></div>
           <div>
             <h2>${d.speaker}</h2>
             <p>${reply || d.text}</p>
@@ -384,31 +386,94 @@
       `);
     }
 
-    portraitStyle(index) {
-      const names = ["Hollow", "Jonah", "Elowen", "Marr", "Child", "Orlen"];
-      return names[index] || names[0];
+    resolvePortraitKey(npc, dialogue) {
+      if (npc && typeof npc.portrait === "string") return npc.portrait;
+      const numeric = ["the_hollow", "jonah_reed", "sister_elowen", "dr_selene_marr", "the_child", "orlen_voss"];
+      if (npc && typeof npc.portrait === "number") return numeric[npc.portrait] || "the_hollow";
+      const name = ((npc && npc.name) || (dialogue && dialogue.speaker) || "").toLowerCase();
+      if (name.includes("elowen")) return "sister_elowen";
+      if (name.includes("jonah")) return "jonah_reed";
+      if (name.includes("marr")) return "dr_selene_marr";
+      if (name.includes("child")) return "the_child";
+      if (name.includes("bell")) return "bell_ringer";
+      if (name.includes("orlen")) return "orlen_voss";
+      if (name.includes("attendance")) return "attendance_keeper";
+      if (name.includes("surgeon")) return "surgeon_without_hands";
+      if (name.includes("hollow")) return "the_hollow";
+      return "elias_mercer";
+    }
+
+    portraitEntry(key) {
+      const manifest = window.THBA.PORTRAIT_MANIFEST;
+      const portraits = manifest && Array.isArray(manifest.portraits) ? manifest.portraits : [];
+      return portraits.find((entry) => entry.key === key) || portraits.find((entry) => entry.key === "elias_mercer") || null;
     }
 
     drawPanelPortraits() {
-      const canvases = this.panel.querySelectorAll("canvas[data-portrait-name]");
+      const canvases = this.panel.querySelectorAll("canvas[data-portrait-key]");
       canvases.forEach((canvas) => {
         const ctx = canvas.getContext("2d");
-        const name = canvas.dataset.portraitName || "Ashfall";
+        const key = canvas.dataset.portraitKey || "elias_mercer";
+        const entry = this.portraitEntry(key);
         ctx.imageSmoothingEnabled = false;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "#0b0b0c";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "#1f1d1a";
-        ctx.fillRect(8, 8, 64, 64);
-        ctx.fillStyle = "#3c3329";
-        ctx.fillRect(20, 14, 40, 20);
-        ctx.fillStyle = "#15120f";
-        ctx.fillRect(18, 34, 44, 30);
-        ctx.fillStyle = "#d7d0bd";
-        ctx.font = "10px serif";
-        ctx.textAlign = "center";
-        ctx.fillText(name.slice(0, 8), 40, 74);
+        if (!entry || !entry.path || this.failedPortraits.has(entry.key)) {
+          this.drawPortraitFallback(ctx, canvas, entry, key);
+          return;
+        }
+        const cached = this.portraitImages[entry.key];
+        if (cached && cached.complete && cached.naturalWidth > 0) {
+          this.drawPortraitImage(ctx, canvas, cached, entry);
+          return;
+        }
+        const img = cached || new Image();
+        this.portraitImages[entry.key] = img;
+        img.onload = () => this.drawPanelPortraits();
+        img.onerror = () => {
+          this.failedPortraits.add(entry.key);
+          this.drawPanelPortraits();
+        };
+        if (!cached) img.src = entry.path;
+        this.drawPortraitFallback(ctx, canvas, entry, key);
       });
+    }
+
+    drawPortraitImage(ctx, canvas, img, entry) {
+      ctx.fillStyle = "#070708";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      const scale = Math.min(canvas.width / img.naturalWidth, canvas.height / img.naturalHeight);
+      const w = Math.max(1, Math.floor(img.naturalWidth * scale));
+      const h = Math.max(1, Math.floor(img.naturalHeight * scale));
+      const x = Math.floor((canvas.width - w) / 2);
+      const y = Math.floor((canvas.height - h) / 2);
+      ctx.drawImage(img, x, y, w, h);
+      ctx.strokeStyle = entry.accentColor || "#6f5d4a";
+      ctx.strokeRect(.5, .5, canvas.width - 1, canvas.height - 1);
+    }
+
+    drawPortraitFallback(ctx, canvas, entry, key) {
+      const name = entry ? entry.displayName : key;
+      const accent = entry && entry.accentColor || "#6f5d4a";
+      ctx.fillStyle = "#0b0b0c";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#171614";
+      ctx.fillRect(7, 7, canvas.width - 14, canvas.height - 14);
+      ctx.fillStyle = accent;
+      ctx.globalAlpha = .25;
+      ctx.fillRect(10, 10, canvas.width - 20, 4);
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = "#26211d";
+      ctx.fillRect(28, 17, 24, 20);
+      ctx.fillStyle = "#11100f";
+      ctx.fillRect(21, 37, 38, 32);
+      ctx.fillStyle = "#090909";
+      ctx.fillRect(23, 25, 34, 8);
+      ctx.strokeStyle = accent;
+      ctx.strokeRect(.5, .5, canvas.width - 1, canvas.height - 1);
+      ctx.fillStyle = "#d7d0bd";
+      ctx.font = "9px serif";
+      ctx.textAlign = "center";
+      ctx.fillText((name || "Unknown").slice(0, 10), canvas.width / 2, canvas.height - 5);
     }
 
     chooseDialogue(index) {
@@ -427,7 +492,7 @@
       const canKeeper = this.state.sanity <= 35 || this.state.inventory.includes("bell_relic");
       this.showPanel(`
         <div class="dialogue-layout">
-          <div class="portrait"><canvas width="80" height="80" data-portrait-name="Hollow"></canvas></div>
+          <div class="portrait"><canvas width="80" height="80" data-portrait-key="the_hollow"></canvas></div>
           <div>
             <h2>The Hollow</h2>
             <p>${window.THBA.DIALOGUES.final_choice.text}</p>

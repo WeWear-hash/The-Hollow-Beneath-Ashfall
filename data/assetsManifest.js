@@ -1,20 +1,18 @@
 (function () {
   window.THBA = window.THBA || {};
   window.THBA.ASSET_AUDIT_MANIFEST = {
-  "version": 3,
+  "version": 4,
   "mode": "strict-manifest-only-asset-audit",
   "rules": {
     "noInference": true,
-    "singleImageRule": "Draw as a single full image unless the manifest explicitly declares a supported tileset or sprite_sheet type.",
-    "tilesetRule": "Slice only when type is tileset, tileSize is 16 or 32, and columns and rows are explicit numbers.",
-    "spriteSheetRule": "Slice only when type is sprite_sheet, frameWidth and frameHeight are explicit numbers, and animations defines explicit frame order.",
-    "currentAssetDefault": "All current PNGs are single_image because no explicit tile or animation metadata has been provided."
+    "singleImageRule": "Draw as a single full image unless explicit metadata declares otherwise.",
+    "currentAssetDefault": "All current PNGs are treated as single images unless separately declared for gameplay."
   },
   "assets": [
     {
-      "path": "assets/characters/ChatGPT Image Jun 4, 2026, 08_11_39 PM.png",
+      "path": "assets/characters/player_sheet.png",
       "type": "single_image",
-      "purpose": "Undeclared character artwork. Draw as one full image until animation metadata is explicitly provided.",
+      "purpose": "Repository image asset; no slicing inferred from path or dimensions.",
       "drawAsSingleImage": true,
       "tileSize": null,
       "columns": null,
@@ -24,9 +22,9 @@
       "animations": null
     },
     {
-      "path": "assets/enemies/ChatGPT Image Jun 4, 2026, 08_11_42 PM.png",
+      "path": "assets/enemies/attendance_keeper.png",
       "type": "single_image",
-      "purpose": "Undeclared enemy artwork. Draw as one full image until animation metadata is explicitly provided.",
+      "purpose": "Repository image asset; no slicing inferred from path or dimensions.",
       "drawAsSingleImage": true,
       "tileSize": null,
       "columns": null,
@@ -36,9 +34,9 @@
       "animations": null
     },
     {
-      "path": "assets/enemies/ChatGPT Image Jun 4, 2026, 08_24_53 PM.png",
+      "path": "assets/enemies/bell_ringer.png",
       "type": "single_image",
-      "purpose": "Undeclared enemy artwork. Draw as one full image until animation metadata is explicitly provided.",
+      "purpose": "Repository image asset; no slicing inferred from path or dimensions.",
       "drawAsSingleImage": true,
       "tileSize": null,
       "columns": null,
@@ -48,9 +46,9 @@
       "animations": null
     },
     {
-      "path": "assets/enemies/ChatGPT Image Jun 4, 2026, 08_24_59 PM.png",
+      "path": "assets/enemies/final_hollow.png",
       "type": "single_image",
-      "purpose": "Undeclared enemy artwork. Draw as one full image until animation metadata is explicitly provided.",
+      "purpose": "Repository image asset; no slicing inferred from path or dimensions.",
       "drawAsSingleImage": true,
       "tileSize": null,
       "columns": null,
@@ -60,9 +58,9 @@
       "animations": null
     },
     {
-      "path": "assets/enemies/ChatGPT Image Jun 4, 2026, 08_25_03 PM.png",
+      "path": "assets/enemies/forest_stalker.png",
       "type": "single_image",
-      "purpose": "Undeclared enemy artwork. Draw as one full image until animation metadata is explicitly provided.",
+      "purpose": "Repository image asset; no slicing inferred from path or dimensions.",
       "drawAsSingleImage": true,
       "tileSize": null,
       "columns": null,
@@ -72,9 +70,9 @@
       "animations": null
     },
     {
-      "path": "assets/portraits/ChatGPT Image Jun 4, 2026, 08_15_41 PM.png",
+      "path": "assets/enemies/hollowed_townsman.png",
       "type": "single_image",
-      "purpose": "Portrait artwork. Always draw as one full image in this audit pass.",
+      "purpose": "Repository image asset; no slicing inferred from path or dimensions.",
       "drawAsSingleImage": true,
       "tileSize": null,
       "columns": null,
@@ -84,9 +82,9 @@
       "animations": null
     },
     {
-      "path": "assets/tilesets/ChatGPT Image Jun 4, 2026, 08_11_46 PM.png",
+      "path": "assets/enemies/mine_horror.png",
       "type": "single_image",
-      "purpose": "Undeclared environment artwork. Draw as one full image until tileSize, columns, and rows are explicitly provided.",
+      "purpose": "Repository image asset; no slicing inferred from path or dimensions.",
       "drawAsSingleImage": true,
       "tileSize": null,
       "columns": null,
@@ -96,9 +94,9 @@
       "animations": null
     },
     {
-      "path": "assets/tilesets/ChatGPT Image Jun 4, 2026, 08_11_51 PM.png",
+      "path": "assets/enemies/surgeon_without_hands.png",
       "type": "single_image",
-      "purpose": "Undeclared environment artwork. Draw as one full image until tileSize, columns, and rows are explicitly provided.",
+      "purpose": "Repository image asset; no slicing inferred from path or dimensions.",
       "drawAsSingleImage": true,
       "tileSize": null,
       "columns": null,
@@ -108,9 +106,9 @@
       "animations": null
     },
     {
-      "path": "assets/tilesets/ChatGPT Image Jun 4, 2026, 08_11_55 PM.png",
+      "path": "assets/portraits/doctor_portrait.png",
       "type": "single_image",
-      "purpose": "Undeclared environment artwork. Draw as one full image until tileSize, columns, and rows are explicitly provided.",
+      "purpose": "Repository image asset; no slicing inferred from path or dimensions.",
       "drawAsSingleImage": true,
       "tileSize": null,
       "columns": null,
@@ -120,9 +118,69 @@
       "animations": null
     },
     {
-      "path": "assets/ui/ChatGPT Image Jun 4, 2026, 08_13_04 PM.png",
+      "path": "assets/portraits/father_portrait.png",
       "type": "single_image",
-      "purpose": "UI artwork. Always draw as one full image in this audit pass.",
+      "purpose": "Repository image asset; no slicing inferred from path or dimensions.",
+      "drawAsSingleImage": true,
+      "tileSize": null,
+      "columns": null,
+      "rows": null,
+      "frameWidth": null,
+      "frameHeight": null,
+      "animations": null
+    },
+    {
+      "path": "assets/portraits/player_portrait.png",
+      "type": "single_image",
+      "purpose": "Repository image asset; no slicing inferred from path or dimensions.",
+      "drawAsSingleImage": true,
+      "tileSize": null,
+      "columns": null,
+      "rows": null,
+      "frameWidth": null,
+      "frameHeight": null,
+      "animations": null
+    },
+    {
+      "path": "assets/tilesets/cave_tileset.png",
+      "type": "single_image",
+      "purpose": "Repository image asset; no slicing inferred from path or dimensions.",
+      "drawAsSingleImage": true,
+      "tileSize": null,
+      "columns": null,
+      "rows": null,
+      "frameWidth": null,
+      "frameHeight": null,
+      "animations": null
+    },
+    {
+      "path": "assets/tilesets/interior_tileset.png",
+      "type": "single_image",
+      "purpose": "Repository image asset; no slicing inferred from path or dimensions.",
+      "drawAsSingleImage": true,
+      "tileSize": null,
+      "columns": null,
+      "rows": null,
+      "frameWidth": null,
+      "frameHeight": null,
+      "animations": null
+    },
+    {
+      "path": "assets/tilesets/town_tileset.png",
+      "type": "single_image",
+      "purpose": "Repository image asset; no slicing inferred from path or dimensions.",
+      "drawAsSingleImage": true,
+      "tileSize": null,
+      "columns": null,
+      "rows": null,
+      "frameWidth": null,
+      "frameHeight": null,
+      "animations": null
+    },
+    {
+      "path": "assets/ui/ui_sheet.png",
+      "type": "single_image",
+      "purpose": "Repository image asset; no slicing inferred from path or dimensions.",
       "drawAsSingleImage": true,
       "tileSize": null,
       "columns": null,
@@ -135,33 +193,35 @@
 };
   window.THBA.ASSET_MANIFEST = {
   "tilesets": {
-    "town": "assets/tilesets/ChatGPT Image Jun 4, 2026, 08_11_46 PM.png",
-    "wilds": "assets/tilesets/ChatGPT Image Jun 4, 2026, 08_11_51 PM.png",
-    "hollow": "assets/tilesets/ChatGPT Image Jun 4, 2026, 08_11_55 PM.png"
+    "town": "assets/tilesets/town_tileset.png",
+    "wilds": "assets/tilesets/interior_tileset.png",
+    "hollow": "assets/tilesets/cave_tileset.png"
   },
   "characters": {
-    "sheet": "assets/characters/ChatGPT Image Jun 4, 2026, 08_11_39 PM.png"
+    "sheet": "assets/characters/player_sheet.png"
   },
   "enemies": {
-    "hollowed": "assets/enemies/ChatGPT Image Jun 4, 2026, 08_11_42 PM.png",
-    "keeper": "assets/enemies/ChatGPT Image Jun 4, 2026, 08_24_53 PM.png",
-    "surgeon": "assets/enemies/ChatGPT Image Jun 4, 2026, 08_24_59 PM.png",
-    "depths": "assets/enemies/ChatGPT Image Jun 4, 2026, 08_25_03 PM.png"
+    "hollowed": "assets/enemies/hollowed_townsman.png",
+    "keeper": "assets/enemies/attendance_keeper.png",
+    "surgeon": "assets/enemies/surgeon_without_hands.png",
+    "depths": "assets/enemies/mine_horror.png"
   },
   "portraits": {
-    "sheet": "assets/portraits/ChatGPT Image Jun 4, 2026, 08_15_41 PM.png"
+    "player": "assets/portraits/player_portrait.png",
+    "doctor": "assets/portraits/doctor_portrait.png",
+    "father": "assets/portraits/father_portrait.png"
   },
   "ui": {
-    "sheet": "assets/ui/ChatGPT Image Jun 4, 2026, 08_13_04 PM.png"
+    "sheet": "assets/ui/ui_sheet.png"
   }
 };
   window.THBA.ASSET_CATALOG = {
-  "version": 2,
+  "version": 3,
   "mode": "no-sliced-gameplay-assets",
   "rules": {
     "noRuntimeInference": true,
     "noSlicingWithoutVerifiedMetadata": true,
-    "description": "Gameplay does not crop or slice generated PNGs. Visuals are procedural until verified tile/sprite metadata is supplied."
+    "description": "Gameplay does not crop or slice generated PNGs. Portraits are loaded separately as full single images."
   },
   "files": []
 };
