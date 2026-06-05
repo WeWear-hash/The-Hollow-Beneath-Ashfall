@@ -59,9 +59,9 @@
         ctx.fillStyle = options && options.fallback || "#6b6057";
         ctx.fillRect(dx, dy, dw, dh);
         ctx.restore();
-        return;
+        return false;
       }
-      this.drawCrop(ctx, crop.imageId, crop.x, crop.y, crop.w, crop.h, dx, dy, dw, dh, options);
+      return this.drawCrop(ctx, crop.imageId, crop.x, crop.y, crop.w, crop.h, dx, dy, dw, dh, options);
     }
 
     drawCrop(ctx, imageId, sx, sy, sw, sh, dx, dy, dw, dh, options) {
@@ -95,6 +95,7 @@
         ctx.fillRect(dx, dy, dw, dh);
       }
       ctx.restore();
+      return Boolean(img);
     }
   }
 

@@ -789,11 +789,15 @@
     drawPlayer(ctx, time) {
       const p = this.state.player;
       const dir = p.dir === "left" ? "left" : p.dir === "right" ? "right" : p.dir === "up" ? "up" : "down";
-      this.assets.drawAlias(ctx, `player.${dir}`, Math.floor(p.x - this.camera.x - 16), Math.floor(p.y - this.camera.y - 28), 32, 32, {
+      const x = Math.floor(p.x - this.camera.x - 16);
+      const y = Math.floor(p.y - this.camera.y - 28);
+      this.drawActorShadow(ctx, p.x - this.camera.x, p.y - this.camera.y, "#d7d0bd");
+      const ok = this.assets.drawAlias(ctx, `player.${dir}`, x, y, 32, 32, {
         mirror: false,
         tint: p.invuln > 0 ? "#e6d6bf" : null,
         tintAlpha: p.invuln > 0 ? .2 : 0
       });
+      if (!ok) this.drawActorFallback(ctx, x, y, 32, 32, "#d7d0bd");
       if (p.attack > 0) {
         ctx.strokeStyle = "rgba(230, 210, 172, .75)";
         ctx.lineWidth = 2;
@@ -813,30 +817,36 @@
         orlen: "npc.orlen",
         townsfolk: "npc.townsfolk"
       };
-      this.assets.drawAlias(ctx, aliases[id] || aliases.townsfolk, Math.floor(x - this.camera.x - 16), Math.floor(y - this.camera.y - 28), 32, 32, {
+      const dx = Math.floor(x - this.camera.x - 16);
+      const dy = Math.floor(y - this.camera.y - 28);
+      this.drawActorShadow(ctx, x - this.camera.x, y - this.camera.y, tint || "#8b8170");
+      const ok = this.assets.drawAlias(ctx, aliases[id] || aliases.townsfolk, dx, dy, 32, 32, {
         tint,
         tintAlpha: .16
       });
+      if (!ok) this.drawActorFallback(ctx, dx, dy, 32, 32, tint || "#8b8170");
     }
 
     drawEnemy(ctx, enemy, time) {
       const def = window.THBA.ENEMIES[enemy.type];
       const alias = this.enemyAlias(enemy.type);
       const size = enemy.boss ? 48 : 34;
-      this.assets.drawAlias(ctx, alias, Math.floor(enemy.x - this.camera.x - size / 2), Math.floor(enemy.y - this.camera.y - size + 8), size, size, {
+      const dx = Math.floor(enemy.x - this.camera.x - size / 2);
+      const dy = Math.floor(enemy.y - this.camera.y - size + 8);
+      this.drawActorShadow(ctx, enemy.x - this.camera.x, enemy.y - this.camera.y + 6, def.tint || "#8b1f27");
+      const ok = this.assets.drawAlias(ctx, alias, dx, dy, size, size, {
         tint: def.tint,
         tintAlpha: .2,
         mirror: Math.sin(time / 500) > 0
       });
+      if (!ok) this.drawActorFallback(ctx, dx, dy, size, size, def.tint || "#8b1f27");
       if (enemy.boss) {
         const hp = enemy.hp === undefined ? def.hp : enemy.hp;
-        ctx.fillStyle = "rgba(0,0,0,.65)";
-        ctx.fillRect(102, 12, 276, 8);
-        ctx.fillStyle = "#8b1f27";
-        ctx.fillRect(102, 12, 276 * clamp(hp / def.hp, 0, 1), 8);
+        this.drawUiPanel(ctx, 96, 4, 288, 22, .34);
+        this.bar(ctx, 106, 14, 268, 6, hp / def.hp, "#8b1f27");
         ctx.fillStyle = "#d7d0bd";
-        ctx.font = "10px system-ui";
-        ctx.fillText(def.name, 102, 10);
+        ctx.font = "9px system-ui";
+        ctx.fillText(def.name, 106, 11);
       }
     }
 
@@ -851,6 +861,51 @@
         final: "enemy.final"
       };
       return aliases[type] || aliases.hollowed;
+    }
+
+    drawActorShadow(ctx, cx, cy, color) {
+      ctx.save();
+      ctx.globalAlpha = .58;
+      ctx.fillStyle = "rgba(0,0,0,.7)";
+      ctx.beginPath();
+      ctx.ellipse(cx, cy + 2, 11, 5, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = .18;
+      ctx.strokeStyle = color;
+      ctx.beginPath();
+      ctx.ellipse(cx, cy - 7, 14, 16, 0, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    drawActorFallback(ctx, x, y, w, h, color) {
+      ctx.save();
+      ctx.fillStyle = "rgba(9,8,7,.9)";
+      ctx.fillRect(x + w * .32, y + h * .18, w * .36, h * .64);
+      ctx.fillStyle = color;
+      ctx.globalAlpha = .72;
+      ctx.fillRect(x + w * .43, y + h * .1, w * .14, h * .14);
+      ctx.strokeStyle = color;
+      ctx.globalAlpha = .5;
+      ctx.strokeRect(x + w * .3, y + h * .16, w * .4, h * .68);
+      ctx.restore();
+    }
+
+    drawUiPanel(ctx, x, y, w, h, alpha) {
+      ctx.save();
+      ctx.fillStyle = "rgba(8,7,6,.78)";
+      ctx.fillRect(x, y, w, h);
+      const ui = this.assets.get("ui.sheet");
+      if (ui) {
+        ctx.globalAlpha = alpha === undefined ? .26 : alpha;
+        ctx.drawImage(ui, 0, 0, ui.naturalWidth, ui.naturalHeight, x, y, w, h);
+      }
+      ctx.globalAlpha = 1;
+      ctx.strokeStyle = "rgba(214,198,164,.48)";
+      ctx.strokeRect(x + .5, y + .5, w - 1, h - 1);
+      ctx.strokeStyle = "rgba(0,0,0,.7)";
+      ctx.strokeRect(x + 2.5, y + 2.5, w - 5, h - 5);
+      ctx.restore();
     }
 
     drawEffects(ctx, time) {
@@ -892,28 +947,33 @@
     drawHud(ctx) {
       if (this.mode === "menu") return;
       const p = this.state.player;
-      ctx.fillStyle = "rgba(0,0,0,.65)";
-      ctx.fillRect(8, 8, 136, 35);
-      this.bar(ctx, 16, 15, 92, 6, p.hp / p.maxHp, "#8b1f27");
-      this.bar(ctx, 16, 27, 92, 5, p.stamina / p.maxStamina, "#b9824b");
-      this.bar(ctx, 16, 37, 92, 4, this.state.sanity / 100, "#6d8f88");
+      this.drawUiPanel(ctx, 8, 8, 150, 48, .32);
+      this.bar(ctx, 18, 17, 96, 6, p.hp / p.maxHp, "#8b1f27");
+      this.bar(ctx, 18, 30, 96, 5, p.stamina / p.maxStamina, "#b9824b");
+      this.bar(ctx, 18, 42, 96, 4, this.state.sanity / 100, "#6d8f88");
       ctx.fillStyle = "#d7d0bd";
       ctx.font = "10px system-ui";
-      ctx.fillText("HP", 113, 20);
-      ctx.fillText("ST", 113, 32);
-      ctx.fillText("MN", 113, 42);
-      ctx.fillStyle = "rgba(0,0,0,.55)";
-      ctx.fillRect(330, 232, 142, 28);
+      ctx.fillText("HP", 122, 22);
+      ctx.fillText("ST", 122, 35);
+      ctx.fillText("MN", 122, 47);
+
+      this.drawUiPanel(ctx, 302, 232, 168, 28, .28);
       ctx.fillStyle = "#d7d0bd";
-      ctx.font = "10px system-ui";
-      ctx.fillText("E interact  Space attack  Q mend", 337, 248);
+      ctx.font = "9px system-ui";
+      ctx.fillText("E interact   Space attack   Q mend", 312, 249);
     }
 
     bar(ctx, x, y, w, h, pct, color) {
-      ctx.fillStyle = "#171614";
+      ctx.save();
+      ctx.fillStyle = "#11100f";
       ctx.fillRect(x, y, w, h);
+      ctx.fillStyle = "rgba(214,198,164,.22)";
+      ctx.fillRect(x - 1, y - 1, w + 2, 1);
       ctx.fillStyle = color;
       ctx.fillRect(x, y, w * clamp(pct, 0, 1), h);
+      ctx.fillStyle = "rgba(255,238,202,.18)";
+      ctx.fillRect(x, y, w * clamp(pct, 0, 1), 1);
+      ctx.restore();
     }
   }
 
