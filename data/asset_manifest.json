@@ -1,191 +1,80 @@
 {
-  "version": 4,
-  "mode": "strict-manifest-only-asset-audit",
-  "rules": {
-    "noInference": true,
-    "singleImageRule": "Draw as a single full image unless explicit metadata declares otherwise.",
-    "currentAssetDefault": "All current PNGs are treated as single images unless separately declared for gameplay."
+  "player_sheet.png": {
+    "type": "sprite_sheet",
+    "frameWidth": 32,
+    "frameHeight": 32
   },
-  "assets": [
-    {
-      "path": "assets/characters/player_sheet.png",
-      "type": "single_image",
-      "purpose": "Repository image asset; no slicing inferred from path or dimensions.",
-      "drawAsSingleImage": true,
-      "tileSize": null,
-      "columns": null,
-      "rows": null,
-      "frameWidth": null,
-      "frameHeight": null,
-      "animations": null
-    },
-    {
-      "path": "assets/enemies/attendance_keeper.png",
-      "type": "single_image",
-      "purpose": "Repository image asset; no slicing inferred from path or dimensions.",
-      "drawAsSingleImage": true,
-      "tileSize": null,
-      "columns": null,
-      "rows": null,
-      "frameWidth": null,
-      "frameHeight": null,
-      "animations": null
-    },
-    {
-      "path": "assets/enemies/bell_ringer.png",
-      "type": "single_image",
-      "purpose": "Repository image asset; no slicing inferred from path or dimensions.",
-      "drawAsSingleImage": true,
-      "tileSize": null,
-      "columns": null,
-      "rows": null,
-      "frameWidth": null,
-      "frameHeight": null,
-      "animations": null
-    },
-    {
-      "path": "assets/enemies/final_hollow.png",
-      "type": "single_image",
-      "purpose": "Repository image asset; no slicing inferred from path or dimensions.",
-      "drawAsSingleImage": true,
-      "tileSize": null,
-      "columns": null,
-      "rows": null,
-      "frameWidth": null,
-      "frameHeight": null,
-      "animations": null
-    },
-    {
-      "path": "assets/enemies/forest_stalker.png",
-      "type": "single_image",
-      "purpose": "Repository image asset; no slicing inferred from path or dimensions.",
-      "drawAsSingleImage": true,
-      "tileSize": null,
-      "columns": null,
-      "rows": null,
-      "frameWidth": null,
-      "frameHeight": null,
-      "animations": null
-    },
-    {
-      "path": "assets/enemies/hollowed_townsman.png",
-      "type": "single_image",
-      "purpose": "Repository image asset; no slicing inferred from path or dimensions.",
-      "drawAsSingleImage": true,
-      "tileSize": null,
-      "columns": null,
-      "rows": null,
-      "frameWidth": null,
-      "frameHeight": null,
-      "animations": null
-    },
-    {
-      "path": "assets/enemies/mine_horror.png",
-      "type": "single_image",
-      "purpose": "Repository image asset; no slicing inferred from path or dimensions.",
-      "drawAsSingleImage": true,
-      "tileSize": null,
-      "columns": null,
-      "rows": null,
-      "frameWidth": null,
-      "frameHeight": null,
-      "animations": null
-    },
-    {
-      "path": "assets/enemies/surgeon_without_hands.png",
-      "type": "single_image",
-      "purpose": "Repository image asset; no slicing inferred from path or dimensions.",
-      "drawAsSingleImage": true,
-      "tileSize": null,
-      "columns": null,
-      "rows": null,
-      "frameWidth": null,
-      "frameHeight": null,
-      "animations": null
-    },
-    {
-      "path": "assets/portraits/doctor_portrait.png",
-      "type": "single_image",
-      "purpose": "Repository image asset; no slicing inferred from path or dimensions.",
-      "drawAsSingleImage": true,
-      "tileSize": null,
-      "columns": null,
-      "rows": null,
-      "frameWidth": null,
-      "frameHeight": null,
-      "animations": null
-    },
-    {
-      "path": "assets/portraits/father_portrait.png",
-      "type": "single_image",
-      "purpose": "Repository image asset; no slicing inferred from path or dimensions.",
-      "drawAsSingleImage": true,
-      "tileSize": null,
-      "columns": null,
-      "rows": null,
-      "frameWidth": null,
-      "frameHeight": null,
-      "animations": null
-    },
-    {
-      "path": "assets/portraits/player_portrait.png",
-      "type": "single_image",
-      "purpose": "Repository image asset; no slicing inferred from path or dimensions.",
-      "drawAsSingleImage": true,
-      "tileSize": null,
-      "columns": null,
-      "rows": null,
-      "frameWidth": null,
-      "frameHeight": null,
-      "animations": null
-    },
-    {
-      "path": "assets/tilesets/cave_tileset.png",
-      "type": "single_image",
-      "purpose": "Repository image asset; no slicing inferred from path or dimensions.",
-      "drawAsSingleImage": true,
-      "tileSize": null,
-      "columns": null,
-      "rows": null,
-      "frameWidth": null,
-      "frameHeight": null,
-      "animations": null
-    },
-    {
-      "path": "assets/tilesets/interior_tileset.png",
-      "type": "single_image",
-      "purpose": "Repository image asset; no slicing inferred from path or dimensions.",
-      "drawAsSingleImage": true,
-      "tileSize": null,
-      "columns": null,
-      "rows": null,
-      "frameWidth": null,
-      "frameHeight": null,
-      "animations": null
-    },
-    {
-      "path": "assets/tilesets/town_tileset.png",
-      "type": "single_image",
-      "purpose": "Repository image asset; no slicing inferred from path or dimensions.",
-      "drawAsSingleImage": true,
-      "tileSize": null,
-      "columns": null,
-      "rows": null,
-      "frameWidth": null,
-      "frameHeight": null,
-      "animations": null
-    },
-    {
-      "path": "assets/ui/ui_sheet.png",
-      "type": "single_image",
-      "purpose": "Repository image asset; no slicing inferred from path or dimensions.",
-      "drawAsSingleImage": true,
-      "tileSize": null,
-      "columns": null,
-      "rows": null,
-      "frameWidth": null,
-      "frameHeight": null,
-      "animations": null
-    }
-  ]
+
+  "hollowed_townsman.png": {
+    "type": "sprite_sheet",
+    "frameWidth": 32,
+    "frameHeight": 32
+  },
+
+  "final_hollow.png": {
+    "type": "sprite_sheet",
+    "frameWidth": 32,
+    "frameHeight": 32
+  },
+
+  "attendance_keeper.png": {
+    "type": "sprite_sheet",
+    "frameWidth": 32,
+    "frameHeight": 32
+  },
+
+  "bell_ringer.png": {
+    "type": "sprite_sheet",
+    "frameWidth": 32,
+    "frameHeight": 32
+  },
+
+  "forest_stalker.png": {
+    "type": "sprite_sheet",
+    "frameWidth": 32,
+    "frameHeight": 32
+  },
+
+  "mine_horror.png": {
+    "type": "sprite_sheet",
+    "frameWidth": 32,
+    "frameHeight": 32
+  },
+
+  "surgeon_without_hands.png": {
+    "type": "sprite_sheet",
+    "frameWidth": 32,
+    "frameHeight": 32
+  },
+
+  "town_tileset.png": {
+    "type": "tileset",
+    "tileSize": 32
+  },
+
+  "cave_tileset.png": {
+    "type": "tileset",
+    "tileSize": 32
+  },
+
+  "interior_tileset.png": {
+    "type": "tileset",
+    "tileSize": 32
+  },
+
+  "father_portrait.png": {
+    "type": "portrait"
+  },
+
+  "player_portrait.png": {
+    "type": "portrait"
+  },
+
+  "doctor_portrait.png": {
+    "type": "portrait"
+  },
+
+  "ui_sheet.png": {
+    "type": "ui"
+  }
 }
